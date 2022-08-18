@@ -1,29 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { useState } from 'react';
+import { SafeAreaView, FlatList, Image, StyleSheet, Text, View, Button } from 'react-native';
+import { useState, useEffect } from 'react';
 
 export default function App() {
-  const [nome,setNome] = useState('-Melância-');
-  const [sessao, setSessao] = useState('Stranger Things');
-  const [cor, setCor] = useState('#150526')
-  const [exibindo,setExipindo] = useState(true)
-  const clicado = () =>{
-      setNome("-Sorvete-");
-      setSessao("Gilmore Girls");
-      setExipindo(false);
-  } 
+  const [pokemons, setPokemons] = useState([])
+  useEffect(() =>{
+    fetch('https://pokeapi.co/api/v2/pokemon',{
+      method:'GET',
+      heathers:{
+        'Accept': 'aplication/json',
+      }
+    })
+    .then(response => response.json())
+    .then(data=>{
+      console.log(data)
+      setPokemons(data.results)
+    })
+  },[])
 
   return (
-    <View style={styles.container}>
-      <View styles={{backgroundColor: `{cor}`}}>
-        <Text style={styles.titulo}>{nome}</Text>
-        <Text style={styles.paragrafo}>{sessao}</Text>
-        <Text style={styles.paragrafo}>{exibindo ? "Está em sessão" : "Acabou"}</Text>
-        <StatusBar style="auto" />
-        <Button title ='trocar sessão' onPress={clicado} />
-      </View>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={pokemons}
+        keyExtractor={(pokemon) => pokemon.name}
+        contentContainerStyle={{flexGrow: 1}}
+        renderItem={PokemonShow}
+      />
+    </SafeAreaView>
   );
+}
+function PokemonShow(item){
+  const {name,url}  = item.item
+  const pokemonNumber = url.replace('https://pokeapi.co/api/v2/pokemon','')
+  const ImageUrl = 'https://cdn.traction.one/pokedex/pokemon' +pokemonNumber+'.png'
+  
+  return(
+    <View style={{flexDirection:'row'}}>
+      <Image style={{width:100, height:100}}
+             source={{uri: ImageUrl.replace('/.png','.png')}}
+      />
+      <Text>{name}</Text>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
