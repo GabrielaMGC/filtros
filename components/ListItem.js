@@ -12,7 +12,7 @@ const ListItem = ({name, symbol, currentPrice, priceChangePercentage7d, logoUrl}
           <Image source= {{uri: logoUrl}} style={styles.image}/>
           <View style= {styles.titlesWrapper}>
             <Text style={styles.title}>{name}</Text>
-            <Text style={styles.subtitle}>{symbol.toUpperCase}</Text>
+            <Text style={styles.subtitle}>{symbol}</Text>
           </View>
         </View>
         <View style={styles.rightWrapper}>
@@ -55,4 +55,5 @@ const styles = StyleSheet.create({
     color: '#737373',
   },
 })
+
 export default ListItem
