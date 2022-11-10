@@ -2,7 +2,8 @@ import React from 'react'
 import User from './user'
 import { Galeria } from './styled'
 
-function Dados({users}) {
+function Dados({users, dadosDoInput}) {
+  console.log(dadosDoInput)
   return (
     <>
     <Galeria>
