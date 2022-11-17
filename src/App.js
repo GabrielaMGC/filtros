@@ -26,7 +26,7 @@ function App() {
         EnvioEstados = {SalvarDados}
       />
     <Dados
-      dados={dadosDoInput}
+      dadosDoInput={dadosDoInput}
       users={users}
     />
    </Fundo>
